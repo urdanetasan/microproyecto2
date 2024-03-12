@@ -17,24 +17,20 @@ function App() {
 
     return () => unsubscribe();
   }, []);
- 
+
+  if (user === null) {
+    return null;
+  }
+
   return (
     <Router>
       <Routes>
-        {!user ? (
-          <>
-            <Route path="/" element={<Navigate to="/register" />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/register" element={<RegisterForm />} />
-          </>
-        ) : (
-          <>
-            <Route path="/clubs" element={<ClubList />} />
-            <Route path="/club/:id" element={<ClubDetails />} />
-
-            <Route path="/profile" element={<UserProfile />} />
-          </>
-        )}
+        <Route path="/" element={user ? <Navigate to="/register" /> : <RegisterForm />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/clubs" element={<ClubList />} />
+        <Route path="/club/:id" element={<ClubDetails />} />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
     </Router>
   );
